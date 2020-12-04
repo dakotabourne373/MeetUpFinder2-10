@@ -1,0 +1,192 @@
+{%extends 'MainApp/base.html'%}
+
+{% comment %} 
+*  REFERENCES
+*  Title: Get Started with Bootstrap
+*  Author: Bootstrap
+*  Date Published: N/A Continuous updates
+*  Date Accessed: October 4, 2020
+*  Code version: v4.5.3
+*  URL: https://getbootstrap.com/
+*  Software License: Code licensed MIT, docs CC BY 3.0.
+
+*  REFERENCES
+*  Title: Get Started with Django
+*  Author: Django
+*  Date Published: N/A Continuous updates
+*  Date Accessed: September 13, 2020
+*  Code version: v3.1.3
+*  URL: https://www.djangoproject.com/
+*  Software License: BSD-3
+{% endcomment %}
+
+{% block content %}
+{% load static %}
+<body>
+    <br>
+    <!-- Container with all of the event details -->
+    <div class="container shadow-lg rounded bg-light pt-2">
+      <!-- Row with Event name -->
+      <div class="row justify-content-center">
+        <div class="col-sm">
+          <h5>Event Name: </h5>
+        </div>
+        <div class="col-sm">
+          {{ event.event_name }}
+        </div>
+      </div>
+
+      <!-- Row with Creator -->
+      <div class="row justify-content-center">
+        <div class="col-sm">
+          <h5>Creator: </h5>
+        </div>
+        <div class="col-sm names">
+          {{ creator | capfirst}}
+        </div>
+      </div>
+      
+      <!-- Row with event description -->
+      <div class="row justify-content-center">
+        <div class="col-sm">
+          <h5>Event Description: </h5>
+        </div>
+        <div class="col-sm">
+          {{event.event_description}}
+        </div>
+         
+
+      </div>
+      
+      <!-- row with start date and time -->
+      <div class="row justify-content-center">
+        
+        <div class="col-sm">
+          <h5>Event Start Date and Time:</h5>
+        </div>
+        <div class="col-sm">
+          {{ event.event_date}}
+        </div>
+        
+
+      </div>
+
+      <!-- row with start data and time -->
+      <div class="row justify-content-center">
+        
+        <div class="col-sm">
+          <h5>Event End Date and Time:</h5>
+        </div>
+        <div class="col-sm">
+          {{ event.event_endtime}}
+        </div>
+        
+
+      </div>
+
+      <!-- row with event capacity -->
+      <div class="row justify-content-center">
+        <div class="col-sm">
+          <h5>Capacity Left: </h5>
+        </div>
+        <div class="col-sm">
+          {{ event.event_capacity }}
+        </div>
+
+        
+      </div>
+      
+      <!-- Row with Address Stuff -->
+      <div class="row justify-content-center">
+        <!-- First column with label -->
+        <div class="col-sm">
+          <h5>Address: </h5>
+        </div>
+
+        <!-- Another column to display address details -->
+        <div class="col-sm">
+              <!-- Row with Address line 1 -->
+          <div class="row justify-content-center">
+            
+            <div class="col-sm">
+              {{ event.event_location.street_number}} {{event.event_location.street_name}}
+            </div>
+            
+
+          </div>
+
+          <!-- Row with City, State, and Zip -->
+          <div class="row justify-content-center">
+            
+            <div class="col-sm">
+              {{ event.event_location.city}},{{ event.event_location.state}}, {{ event.event_location.zip_code}}
+
+            </div>
+
+
+          </div>
+          
+        </div>
+
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-sm">
+          <h5>Attendees: </h5>
+        </div>
+        <div class="col-sm names">
+            {% for person in attendees %}
+              {{person.profile.name | capfirst}} <br>
+  
+            {% empty %}
+              <p>Currently no attendees</p>
+            {% endfor %}
+        </div>
+      </div>    
+  </div>
+
+  <br>
+
+  {% csrf_token %}
+  <!-- make sure you check if the event is at capacity or not -->
+  {% if finished %}
+    <div class="container">
+      <div class="row justify-content-center">
+        <strong>EVENT EXPIRED!!!</strong> 
+      </div>
+    </div>
+  <!-- If they are the creator, then they can delete the event -->
+  {% elif is_creator %}
+    <div class="container">
+      <div class="row justify-content-center">
+        <a href="/MeetUpFinder/{{ event.id }}/rsvp/"><button type="submit" class="btn btn-danger" name="button" value="delete">Delete</button></a>
+      </div>
+    </div>
+  <!-- Know event is not finished, so check capacity and membership -->
+  {% elif at_capacity and is_member%}
+    <div class="container">
+      <div class="row justify-content-center">
+        <a href="/MeetUpFinder/{{ event.id }}/rsvp/"><button type="submit" class="btn btn-danger" name="button" value="rsvp">UnRSVP</button></a>
+      </div>
+    </div>
+  {% elif at_capacity and not is_member%}
+    <div class="container">
+      <div class="row justify-content-center">
+        Sorry, this event is full
+      </div>
+    </div>
+  {% elif not at_capacity and not is_member%}
+  <div class="container">
+    <div class="row justify-content-center">
+      <a href="/MeetUpFinder/{{ event.id }}/rsvp/"><button type="submit" class="btn btn-success" name="button" value="rsvp">RSVP</button></a>
+    </div>
+  </div>
+  {% elif not at_capacity and is_member%}
+    <div class="container">
+      <div class="row justify-content-center">
+        <a href="/MeetUpFinder/{{ event.id }}/rsvp/"><button type="submit" class="btn btn-danger" name="button" value="rsvp">UnRSVP</button></a>
+      </div>
+    </div>     
+  {% endif %}	
+</body>
+{% endblock %}

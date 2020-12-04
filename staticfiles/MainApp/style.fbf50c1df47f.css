@@ -1,0 +1,41 @@
+
+body {
+    background: #80b1ee;
+}
+
+.names {
+    color: rgb(107, 169, 177);
+}
+.custom-wrap {
+    margin: 0, auto;
+    width: 100%;
+}
+#kais-kontainer {
+    margin: 0, auto;
+    overflow: hidden;
+    padding: 0, 15px;
+    width: 100%;
+}
+
+#trial {
+    color:red;
+}
+
+.vertical {
+    top: 35%;
+    transform: translateY(-50%);
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    text-justify: center;
+}
+
+.right {
+    float:right;
+}
+
+.kai-boarder {
+    border-width:2px;
+    border-style:solid;
+    border-color:black;
+}

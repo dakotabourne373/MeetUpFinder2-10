@@ -1,0 +1,99 @@
+{% extends "MainApp/base.html"%}
+
+{% comment %} 
+*  REFERENCES
+*  Title: Get Started with Bootstrap
+*  Author: Bootstrap
+*  Date Published: N/A Continuous updates
+*  Date Accessed: October 4, 2020
+*  Code version: v4.5.3
+*  URL: https://getbootstrap.com/
+*  Software License: Code licensed MIT, docs CC BY 3.0.
+
+*  REFERENCES
+*  Title: Get Started with Django
+*  Author: Django
+*  Date Published: N/A Continuous updates
+*  Date Accessed: September 13, 2020
+*  Code version: v3.1.3
+*  URL: https://www.djangoproject.com/
+*  Software License: BSD-3
+{% endcomment %}
+
+{% load static %}
+{% block content %}
+  <body >
+  <br>
+  <br>
+
+    <!-- Header container -->
+    <div class="container">
+      
+      <div class="row justify-content-center">
+        <h2>Profile Name - {{ profile.name.capitalize }}</h2>
+      </div>
+      
+    </div>
+
+    <br>
+
+    <!-- Group for all of the Person's Created events -->
+    <div class="container">
+      <h3> Your Created Events: </h3>
+      <div class="list-group">
+      
+        <!-- Loops through all of the event objects passed through the context dictionary -->
+        {% for event in created_events %}
+        <a href="/MeetUpFinder/{{ event.id }}/details/" class="list-group-item list-group-item-action flex-column align-items-start bg-light shadow-lg">
+          
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{event.event_name}}</h5>
+            <small><strong>Date:</strong> {{event.event_date}}</small>
+          </div>
+          <p>
+            {{event.event_description}}
+          </p>
+          <small>Capacity: <span class="badge badge-primary badge-pill">{{event.event_capacity}}</span></small>
+        </a>
+        <br>
+          {% empty %}
+          <div class="card d-flex w-100 justify-content-between flex-column" style= "height: 100px">
+				    <h4 class="vertical">You have no events that you have created.</h5>
+			    </div>
+        {% endfor %}
+        
+      </div>
+    </div>
+    
+    <br>
+    
+    <!-- Group for all of the events to be listed -->
+    <div class="container">
+      <h3> RSVPed Events: </h3>
+      <div class="list-group">
+      
+        <!-- Loops through all of the event objects passed through the context dictionary -->
+        {% for event in rsvped_events %}
+        <a href="/MeetUpFinder/{{ event.id }}/details/" class="list-group-item list-group-item-action flex-column align-items-start bg-light shadow-lg">
+          
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{event.event_name}}</h5>
+            <small><strong>Date:</strong> {{event.event_date}}</small>
+          </div>
+          <p>
+            {{event.event_description}}
+          </p>
+          <small>Capacity: <span class="badge badge-primary badge-pill">{{event.event_capacity}}</span></small>
+        
+        </a>
+        <br>
+        {% empty %}
+			<div class="card d-flex w-100 justify-content-between flex-column" style= "height: 100px">
+				<h4 class="vertical">You have no events that you are going to.</h5>
+			</div>
+        {% endfor %}
+        
+      </div>
+    </div>     
+</body>
+{% endblock %}

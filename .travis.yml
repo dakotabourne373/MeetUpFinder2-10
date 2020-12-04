@@ -1,0 +1,14 @@
+language: python
+python:
+- '3.8'
+install:
+- pip install -r requirements-travis.txt
+script:
+- python manage.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: whYF87xinil6aUTTOXTEFOuUxKXWBtfry5tWfpHe5WXFsA6J9ckVj5a1gyCwWSVsgp/cKGsbUuisOgjmlAGc+a0zD/J/ryBK3npfn5Ss5jN7O3ExXUCpKYXzx6bFlam/A9+URW6XWoeLt7yYHuqEddIf+jCl1xiGQPUkcwUz9sxFYmSs088YgBT4sz+I12OjSjfqqvH3xJmqon7FLRjf+puwCCds+AFghAjjPs3NuBVuwiZ/iPPxlnAwXoSJd5SZVoZZAaI/t7yuSZumOhUTl8DGnn62LVO987l92s2DXDei0baMBEcnJVeX7M0qHdrCbzGE4bypa70VWdrqqtyOp2jATm75od6H1YTnugfWY9k7cZzcsbmY8wtzQhj+j8uP20T5ZNe9G4VvJJXOul8oMuULlMzlz5QAuW2S71zGIPfsldndwX5U6/4bZHu/NuDJU/+fZ0CGdlc4/0KwVbkNHtiWeSsAXv1rzjBhgDdZewWQ/FfOmJds8GE+FgYp0HxnIMftZx+9L3bYbLtdTn4qLcKeMUw6Xw7PixFcupjPtf32udutULHiSXTm1TXIZOIa1h1w1ANqDxkPXwU0ZNo18fePlxuuGrffRYm+AHITmMoI9L1+TNXN4qiA6FfQgv63/zsPr21unw1QbKOUISCAG5hykH12wPgMKF7sC4Mf5hk=
+  app: meetup-project-2-10
+  on:
+    repo: uva-cs3240-f20/project-2-10

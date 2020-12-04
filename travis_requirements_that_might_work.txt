@@ -1,0 +1,6 @@
+Django
+gunicorn
+django-allauth
+django-mysql
+django-multiselectfield
+django-heroku
